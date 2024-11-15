@@ -3,9 +3,26 @@ const Course = ({course}) => {
     <>
     <Header name={course.name}> </Header>
     <Content parts={course.parts }></Content>
+    <Total parts={course.parts} ></Total>
     </>
     )
 
+
+}
+
+const Total = ({parts}) => {
+
+  return ( 
+    <h1> the total number of Exercises: {parts.reduce( sumEx , 0)}
+    </h1>
+  )
+
+
+}
+
+const sumEx = (total , part) => {
+
+  return total + part.exercises
 
 }
 
@@ -49,16 +66,16 @@ const App = () => {
         id: 3
       },
       {
-        name: 'extra part test 1',
+        name: 'extra part test 1 //',
         exercises: 24,
         id: 4
       },
       {
-        name: 'extra part test  2',
+        name: 'extra part test  2 //',
         exercises: 12,
         id: 5
       },{
-        name: 'extra part test 3',
+        name: 'extra part test 3 //',
         exercises: 7,
         id: 6
       }
