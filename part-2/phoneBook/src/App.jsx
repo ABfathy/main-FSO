@@ -12,13 +12,19 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const person = {
-      name: newName
-    }
+    const newPerson = { name: newName}     
 
-    setPersons(persons.concat(person))
+    const isDuplicated = persons.some(person => JSON.stringify(person) === JSON.stringify(newPerson))
+
+    if(isDuplicated){
+      alert(`${newPerson.name} is already in the phonebook`)
+      return;
+    }
+    
+    setPersons(persons.concat(newPerson))
     setNewName('')
-  }
+   }
+
 
   const handleChange = (event) => {
 
