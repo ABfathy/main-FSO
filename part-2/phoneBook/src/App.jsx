@@ -4,15 +4,20 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas' , number: '01008983902'}
   ]) 
 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const newPerson = { name: newName}     
+    const newPerson = { 
+      name: newName,
+      number: newNumber
+    }     
 
     const isDuplicated = persons.some(person => JSON.stringify(person) === JSON.stringify(newPerson))
 
@@ -21,14 +26,28 @@ const App = () => {
       return;
     }
     
+    if(!newPerson.name || !newPerson.number){
+      alert('complete all fields to add to the phonebook')
+      return;
+    }
+
     setPersons(persons.concat(newPerson))
     setNewName('')
+    setNewNumber('')
+    
    }
 
 
-  const handleChange = (event) => {
+  const handleChangeName = (event) => {
 
     setNewName(event.target.value)
+
+  }
+
+
+  const handleChangeNumber = (event) => {
+
+    setNewNumber(Number(event.target.value))
 
   }
 
@@ -37,7 +56,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input value={newName} onChange={handleChange}/>
+          name: <input value={newName} onChange={handleChangeName}/>
+        </div>
+        <div>
+          number: <input type="number" value={newNumber} onChange={handleChangeNumber}/>
         </div>
         <div>
           <button type="submit">add</button>
@@ -45,7 +67,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-      {persons.map(person=><li key={person.name}>{person.name}</li> )}
+      {persons.map(person=><li key={person.name}>{person.name} {person.number}</li> )}
       </ul>
     </div>
   )
