@@ -1,75 +1,26 @@
 import { useState } from 'react'
-
+import Search  from './Search.jsx'
+import DisplayAll from './DisplayAll.jsx'
+import Display from './Display.jsx'
 
 
 const App = () => {
+
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' , number: '01008983902'}
+    { name: 'Arto Hellas' , number: '01008983902' , id: '0'},
+    { name: 'Ada Lovelace', number: '39-44-5323523' , id : '1'},
+    { name: 'Dan Abramov', number: '12-43-234345' , id : '2' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' , id : '3'}
   ]) 
-
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    const newPerson = { 
-      name: newName,
-      number: newNumber
-    }     
-
-    const isDuplicated = persons.some(person => JSON.stringify(person) === JSON.stringify(newPerson))
-
-    if(isDuplicated){
-      alert(`${newPerson.name} is already in the phonebook`)
-      return;
-    }
-    
-    if(!newPerson.name || !newPerson.number){
-      alert('complete all fields to add to the phonebook')
-      return;
-    }
-
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewNumber('')
-    
-   }
-
-
-  const handleChangeName = (event) => {
-
-    setNewName(event.target.value)
-
-  }
-
-
-  const handleChangeNumber = (event) => {
-
-    setNewNumber(Number(event.target.value))
-
-  }
-
+ 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input value={newName} onChange={handleChangeName}/>
-        </div>
-        <div>
-          number: <input type="number" value={newNumber} onChange={handleChangeNumber}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-      {persons.map(person=><li key={person.name}>{person.name} {person.number}</li> )}
-      </ul>
-    </div>
+    <>
+      <h1>Phonebook</h1>
+      <Search persons={persons}/>
+      <Display persons={persons} setPersons={setPersons}/>
+      <DisplayAll persons={persons}/>
+    </>
   )
 }
+
 export default App
