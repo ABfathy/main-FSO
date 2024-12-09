@@ -1,10 +1,7 @@
 
 const DisplayAll = ({ persons }) => {
 
-    console.log(persons);
-    return(
-        
-        
+    return(    
         <>
         <h2>Numbers</h2>
         <ul>
