@@ -1,4 +1,5 @@
 import { useState } from "react"
+import personServices from './services/services.js'
 
 const Display = ({ persons , setPersons }) =>{
 
@@ -6,13 +7,13 @@ const Display = ({ persons , setPersons }) =>{
     const [newNumber, setNewNumber] = useState('')
 
     const handleSubmit = (event) => {
+        
         event.preventDefault()
-    
+
         const newPerson = { 
           name: newName,
           number: newNumber,
-          id: String(persons.length + 1)
-    
+         
         }     
     
         const isDuplicated = persons.some(person => JSON.stringify(person) === JSON.stringify(newPerson))
@@ -26,11 +27,16 @@ const Display = ({ persons , setPersons }) =>{
           alert('complete all fields to add to the phonebook')
           return;
         }
+        
+        personServices
+        .addPerson(newPerson)
+        .then( person => {
+          setPersons(persons.concat(person))
+          setNewName('')
+          setNewNumber('') }
     
-        setPersons(persons.concat(newPerson))
-        setNewName('')
-        setNewNumber('')
-    
+        )
+        
        }
     
     
