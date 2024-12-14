@@ -15,19 +15,41 @@ const Display = ({ persons , setPersons }) =>{
           number: newNumber,
          
         }     
-    
-        const isDuplicated = persons.some(person => JSON.stringify(person) === JSON.stringify(newPerson))
-    
-        if(isDuplicated){
-          alert(`${newPerson.name} is already in the phonebook`)
-          return;
-        }
         
         if(!newPerson.name || !newPerson.number){
           alert('complete all fields to add to the phonebook')
           return;
         }
         
+        const isDuplicated = persons.some(
+          person => person.name === newPerson.name && person.number === newPerson.number
+        );
+        
+        if(isDuplicated){
+          alert(`${newPerson.name} is already in the phonebook`)
+          return;
+        }
+
+        
+        if(persons.some(person => newPerson.name == person.name)){
+          const replace = confirm(`${newPerson.name} is already added to the phonebook, do you want to replace the old number with a new one?`)
+          if(replace) {
+            const person = persons.find(person => newPerson.name == person.name)
+            const changedPerson = {...person, number: newPerson.number}
+            personServices
+            .updateInformation(changedPerson.id , changedPerson)
+            .then(newPerson => {
+
+              setPersons(persons.map(person => person.id === changedPerson.id ? newPerson : person ))
+              setNewName('')
+              setNewNumber('') 
+
+            })
+            return;
+          }
+        }
+        
+       
         personServices
         .addPerson(newPerson)
         .then( person => {

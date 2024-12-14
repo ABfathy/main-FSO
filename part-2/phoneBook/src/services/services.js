@@ -18,10 +18,16 @@ const addPerson = (personObject) => {
     return req.then(response => response.data)
 }
 
+const updateInformation = (id , newPerson) => {
+    const req = axios.put(`${url}/${id}`, newPerson)
+    return req.then(response => response.data)
+}
+
 export default {
 
     getAll,
     addPerson,
-    deletePerson
+    deletePerson,
+    updateInformation
 
 }
