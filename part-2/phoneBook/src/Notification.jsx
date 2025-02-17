@@ -5,9 +5,13 @@ const Notification = ({ message , notificationType }) => {
     const successStyle = {
 
         padding: 10,
+        background: "lightgrey",
         color: "green",
         fontSize: "1.5rem",
-        fontStyle: "italic"
+        fontStyle: "italic",
+        borderStyle: "solid",
+        borderRadius: 5
+
 
     
     }
@@ -15,9 +19,12 @@ const Notification = ({ message , notificationType }) => {
     const failureStyle = {
 
         padding: 10,
+        background: "lightgrey",
         color: "red",
         fontSize: "1.5rem",
-        fontStyle: "italic"
+        fontStyle: "italic",
+        borderStyle: "solid",
+        borderRadius: 5
 
     }
 

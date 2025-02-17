@@ -53,7 +53,21 @@ const Display = ({ persons , setPersons }) =>{
                 setNotificationBoolean('') 
               }, 5000)
 
-            })
+            }).catch(error => {
+
+              setMessage(`Information of ${changedPerson.name} has already been removed`)
+              setNotificationBoolean('failure')
+              setTimeout(()=>{
+                setMessage(null)
+                setNotificationBoolean('') 
+
+              }, 5000)
+
+              setPersons(persons.filter(p => p.id !== changedPerson.id))
+            
+            }
+
+            )
             return;
           }
         }
