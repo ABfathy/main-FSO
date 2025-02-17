@@ -1,10 +1,12 @@
 import { useState } from "react"
 import personServices from './services/services.js'
-
+import Notification from "./Notification.jsx"
 const Display = ({ persons , setPersons }) =>{
 
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
+    const [message , setMessage ] = useState(null)
+    const [notificationBoolean , setNotificationBoolean] = useState()
 
     const handleSubmit = (event) => {
         
@@ -36,6 +38,7 @@ const Display = ({ persons , setPersons }) =>{
           if(replace) {
             const person = persons.find(person => newPerson.name == person.name)
             const changedPerson = {...person, number: newPerson.number}
+            
             personServices
             .updateInformation(changedPerson.id , changedPerson)
             .then(newPerson => {
@@ -43,6 +46,12 @@ const Display = ({ persons , setPersons }) =>{
               setPersons(persons.map(person => person.id === changedPerson.id ? newPerson : person ))
               setNewName('')
               setNewNumber('') 
+              setMessage(`Updated ${newPerson.name}'s contact details`)
+              setNotificationBoolean('success') 
+              setTimeout(()=>{
+                setMessage(null)
+                setNotificationBoolean('') 
+              }, 5000)
 
             })
             return;
@@ -55,7 +64,14 @@ const Display = ({ persons , setPersons }) =>{
         .then( person => {
           setPersons(persons.concat(person))
           setNewName('')
-          setNewNumber('') }
+          setNewNumber('') 
+          setMessage(`Added ${newPerson.name}'s contact details`)
+          setNotificationBoolean('success') 
+          setTimeout(()=>{
+            setMessage(null)
+            setNotificationBoolean('') 
+          }, 5000)
+        }
     
         )
         
@@ -77,6 +93,7 @@ const Display = ({ persons , setPersons }) =>{
 
       return (
         <>
+        <Notification message={message} notificationType={notificationBoolean} />
         <h2>Add new entry: </h2>
         <form onSubmit={handleSubmit}>
         <div>
