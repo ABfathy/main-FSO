@@ -1,5 +1,6 @@
 import { useState , useEffect } from 'react'
 import axios from 'axios'
+import Button from './components/Button'
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
   }
 
 
+
+
   return (
     <>
     find countries <input type="text" value={value} onChange={handleChange}/>
@@ -58,7 +61,7 @@ function App() {
         <h1>Flag</h1>
         <img src={country.flags.png} alt={`${country.name.common} flag`} width="500" />
         </div>):
-        countries.map(country => <li key={country.cca3}>{country.name.common}</li>)
+        countries.map(country => <li key={country.cca3} >{country.name.common} <Button  country={country} ></Button> </li> )
       }
       </div>
     </>
