@@ -55,16 +55,31 @@ const Display = ({ persons , setPersons }) =>{
 
             }).catch(error => {
 
-              setMessage(`Information of ${changedPerson.name} has already been removed`)
-              setNotificationBoolean('failure')
-              setTimeout(()=>{
+              if(error.response.status === 400){
+
+                setMessage(error.response.data.error)
+                setNotificationBoolean('failure')
+                setTimeout(()=>{
                 setMessage(null)
                 setNotificationBoolean('') 
+                
+
+              }, 5000)
+
+                
+              } else {
+                setMessage(`Information of ${changedPerson.name} has already been removed`)
+                setNotificationBoolean('failure')
+                setTimeout(()=>{
+                setMessage(null)
+                setNotificationBoolean('') 
+                
 
               }, 5000)
 
               setPersons(persons.filter(p => p.id !== changedPerson.id))
-            
+            }
+              
             }
 
             )
@@ -86,8 +101,21 @@ const Display = ({ persons , setPersons }) =>{
             setNotificationBoolean('') 
           }, 5000)
         }
-    
         )
+        .catch(error => {
+          setMessage(error.response.data.error)
+          setNotificationBoolean('failure')
+              setTimeout(()=>{
+                setMessage(null)
+                setNotificationBoolean('') 
+                
+
+              }, 5000)
+
+          
+        })
+
+        return;
         
        }
     
@@ -101,7 +129,7 @@ const Display = ({ persons , setPersons }) =>{
     
       const handleChangeNumber = (event) => {
     
-        setNewNumber(Number(event.target.value))
+        setNewNumber(event.target.value)
     
       }
 
@@ -114,7 +142,7 @@ const Display = ({ persons , setPersons }) =>{
           name: <input value={newName} onChange={handleChangeName}/>
         </div>
         <div>
-          number: <input type="number" value={newNumber} onChange={handleChangeNumber}/>
+          number: <input type="text" value={newNumber} onChange={handleChangeNumber}/>
         </div>
         <div>
           <button type="submit">add</button>
